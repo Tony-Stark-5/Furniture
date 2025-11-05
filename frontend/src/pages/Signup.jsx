@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -14,21 +15,17 @@ export default function Signup() {
     setLoading(true);
 
     try {
-      // 👇 Sending data to backend API (port 8000)
-      const response = await axios.post("http://localhost:8000/api/signup", {
-        
+      await axios.post("http://localhost:8000/api/signup", {
         name,
         email,
         password,
       });
 
-      console.log("Server Response:", response.data);
-      alert("Signup Successful!");
+      toast.success("✅ Signup Successful!");
       navigate("/login");
     } catch (error) {
-      console.error("Signup Error:", error);
-      alert(
-        error.response?.data?.message || "Signup failed. Please try again."
+      toast.error(
+        error.response?.data?.message || "❌ Signup failed. Please try again."
       );
     } finally {
       setLoading(false);
@@ -40,8 +37,8 @@ export default function Signup() {
       {/* Left Side - Image */}
       <div className="hidden md:block md:w-1/2">
         <img
-          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop"
-          alt="Modern Furniture Setup"
+          src="images1.jpg"
+          alt="Signup illustration"
           className="h-full w-full object-cover"
         />
       </div>
@@ -53,9 +50,8 @@ export default function Signup() {
             Create your account
           </h2>
           <p className="text-gray-500 mb-8 text-sm">
-            Join{" "}
-            <span className="font-semibold text-gray-800">Furnixar</span> and
-            explore stylish, modern furniture for your dream home.
+            Join <span className="font-semibold text-gray-800">Furnixar</span>{" "}
+            to explore stylish furniture and deals!
           </p>
 
           <form onSubmit={handleSignup} className="space-y-5">
@@ -69,7 +65,7 @@ export default function Signup() {
               <input
                 id="name"
                 type="text"
-                placeholder="Enter your full name"
+                placeholder="Enter your name"
                 className="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:border-yellow-600"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -105,7 +101,7 @@ export default function Signup() {
               <input
                 id="password"
                 type="password"
-                placeholder="Create a password"
+                placeholder="********"
                 className="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:border-yellow-600"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -122,7 +118,7 @@ export default function Signup() {
                   : "bg-yellow-600 hover:bg-yellow-700"
               }`}
             >
-              {loading ? "Signing Up..." : "Sign Up"}
+              {loading ? "Signing up..." : "Sign Up"}
             </button>
           </form>
 

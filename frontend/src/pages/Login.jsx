@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -18,21 +19,14 @@ export default function Login() {
         password,
       });
 
-      console.log("Login Response:", response.data);
+      toast.success("✅ Login successful!");
 
-      // Show success alert
-      alert("✅ Login successful!");
-
-      // Optionally, save JWT token to localStorage
       localStorage.setItem("token", response.data.token);
 
-      // Redirect to homepage or dashboard
-      navigate("/home");
+      navigate("/hero", { replace: true });
     } catch (error) {
-      console.error("Login Error:", error);
-      alert(
-        error.response?.data?.message ||
-          "❌ Invalid credentials. Please try again."
+      toast.error(
+        error.response?.data?.message || "❌ Invalid credentials. Please try again."
       );
     } finally {
       setLoading(false);
