@@ -10,9 +10,11 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
+      <Navbar />
+      <Hero />
     </Routes>
   );
 }
 
-export default App;
 
+export default App
